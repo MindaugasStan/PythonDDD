@@ -1,0 +1,17 @@
+fastapi[all]
+requests
+uvicorn[standard]
+pydantic >= 2
+pydantic_settings
+sqlalchemy >= 2
+alembic[tz]
+psycopg2-binary
+pytest
+pytest-cov
+pytest-dotenv
+pytest-mock
+pytest-xdist
+pytest-asyncio
+python-dateutil
+prometheus-fastapi-instrumentator
+asgi_correlation_id ~= 4.2.0
