@@ -14,10 +14,12 @@ class Employee:
         hourly_rate: float,
         experience: float,
         company_id: int,
+        employee_id: int | None = None,
         jobend_date: datetime | None = None,
         created_at: datetime | None = None,
         updated_at: datetime | None = None,
     ) -> None:
+        self._employee_id = employee_id
         self._name = name
         self._lastname = lastname
         self._jobstart_date = jobstart_date
@@ -32,6 +34,7 @@ class Employee:
         created_at = to_isoformat_or_none(self._created_at)
         updated_at = to_isoformat_or_none(self._updated_at)
         return {
+            "employee_id": self._employee_id,
             "name": self._name,
             "lastname": self._lastname,
             "jobstart_date": self._jobstart_date,
@@ -54,6 +57,7 @@ class Employee:
         company_id: int,
     ) -> "Employee":
         employee = cls(
+            employee_id=None,
             name=name,
             lastname=lastname,
             jobstart_date=jobstart_date,

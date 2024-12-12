@@ -9,7 +9,8 @@ from app.seniority_level.infrastructure.db_models import SeniorityLevel
 
 
 class Employee(BasePlusDateTime):
-    __tablename__ = "employees"
+    __tablename__ = "employees"  # Ensure table name is consistent
+
     employee_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(Text, nullable=False)
     lastname: Mapped[str] = mapped_column(Text, nullable=False)
@@ -22,21 +23,28 @@ class Employee(BasePlusDateTime):
     )
     hourlyrate: Mapped[float] = mapped_column()
     experience: Mapped[float] = mapped_column()
+
+    # Fix: Ensure foreign keys reference the correct column
     company_id: Mapped[int] = mapped_column(
         ForeignKey(
-            "companies.company_id",
-            ondelete="RESTRICT",
-        ),
+            "companies.company_id", ondelete="RESTRICT"
+        ),  # Corrected FK reference
     )
-    employee_company: Mapped[Company] = relationship(
-        lazy="joined", cascade="all, delete-orphan"
+    employee_company: Mapped["Company"] = relationship(
+        "Company",
+        back_populates="employees",
+        lazy="joined",
+        cascade="all, delete-orphan",
     )
+
     senioritylevel_id: Mapped[int] = mapped_column(
         ForeignKey(
-            "companies.company_id",
-            ondelete="RESTRICT",
-        ),
+            "seniority_levels.seniority_level_id", ondelete="RESTRICT"
+        ),  # Fixed FK reference
     )
-    seniority_level: Mapped[SeniorityLevel] = relationship(
-        lazy="joined", cascade="all, delete-orphan"
+    seniority_level: Mapped["SeniorityLevel"] = relationship(
+        "SeniorityLevel",
+        back_populates="employees",
+        lazy="joined",
+        cascade="all, delete-orphan",
     )
