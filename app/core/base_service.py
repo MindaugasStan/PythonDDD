@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Sequence, TypeVar, Generic
+from typing import Generic, Sequence, TypeVar
 
-_T = TypeVar('_T')
+_T = TypeVar("_T")
+
 
 class QueryService(ABC, Generic[_T]):
 

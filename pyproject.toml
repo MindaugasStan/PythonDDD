@@ -1,0 +1,49 @@
+[tool.black]
+line-length = 79
+target-version = ["py312"]
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.isort]
+combine_star = true
+line_length = 79
+profile = "black"
+remove_redundant_aliases = true
+
+[tool.pip-tools]
+strip-extras = true
+
+[tool.pylint.basic]
+good-names = [
+    # Default
+    "i",
+    "j",
+    "k",
+    "ex",
+    "Run",
+    "_",
+    # Custom
+    "db",
+]
+
+[tool.pylint.format]
+max-line-length = 79
+
+[tool.pylint.messages_control]
+extension-pkg-whitelist = "pydantic"
+disable = [
+    "fixme",
+    "import-error", # Too many false positives in a containerized environment
+    "line-too-long", # Useless with black
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "missing-module-docstring",
+    "too-few-public-methods",
+    "too-many-arguments",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+env_files = ["tests/tests.env"]
+env_override_existing_values = 1

@@ -1,16 +1,17 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Sequence, Generic
+from typing import Generic, Sequence, TypeVar
 
-_T = TypeVar('_T')
+_T = TypeVar("_T")
+_D = TypeVar("_D")
 
 
 class BaseRepository(ABC, Generic[_T]):
     """
-        Abstract generic Repository
+    Abstract generic Repository
     """
 
     @abstractmethod
-    def create(self, entity: _T) -> _T:
+    def create(self, agg: _D, entity: _T) -> _T:
         raise NotImplementedError()
 
     @abstractmethod
@@ -22,7 +23,7 @@ class BaseRepository(ABC, Generic[_T]):
         raise NotImplementedError()
 
     @abstractmethod
-    def update(self, entity: _T) -> _T:
+    def update(self, agg: _D, entity: _T) -> _T:
         raise NotImplementedError()
 
     @abstractmethod

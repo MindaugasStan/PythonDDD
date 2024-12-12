@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: python-ddd
+    container_name: ddd-development-app
+    user: app
+    command: uvicorn app.main:app --host=0.0.0.0 --port=8080 --reload
+    volumes:
+      - ./:/app
+    ports:
+      - "8008:8080"
+    environment:
+      CORS_ALLOW_ORIGIN_REGEX: 'https?://localhost(:.*)?'
+      POSTGRES_PASSWORD: secret
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: ddd-development-db
+    command: postgres -c log_statement=all
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: ddd
+
+volumes:
+  postgres_data:
