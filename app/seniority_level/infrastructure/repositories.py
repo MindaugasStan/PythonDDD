@@ -28,6 +28,19 @@ class SeniorityLevelRepository(BaseRepository):
 
         return self._to_entity(db_model)
 
+    def find_by_company_id(self, company_id_: int) -> list[SeniorityLevel]:
+        db_models = list(
+            self._session.query(DBSeniorityLevel)
+            .filter(DBSeniorityLevel.company_id == company_id_)
+            .all()
+        )
+        if not db_models:
+            raise NoResultFound(
+                f"Seniority Levels with company_id[{company_id_}] cannot be found."
+            )
+
+        return [self._to_entity(db_model) for db_model in db_models]
+
     def findall(self) -> list[SeniorityLevel]:
         db_models = list(self._session.scalars(select(DBSeniorityLevel)).all())
         return [self._to_entity(db_model) for db_model in db_models]

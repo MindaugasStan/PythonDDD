@@ -14,6 +14,7 @@ class Employee:
         hourlyrate: float,
         experience: float,
         company_id: int,
+        senioritylevel_id: int | None = None,
         employee_id: int | None = None,
         jobenddate: datetime | None = None,
         created_at: datetime | None = None,
@@ -31,6 +32,7 @@ class Employee:
         self._created_at = created_at
         self._updated_at = updated_at
         self._email = email
+        self._senioritylevel_id = senioritylevel_id
 
     def to_snapshot(self) -> dict[str, Any]:
         created_at = to_isoformat_or_none(self._created_at)
@@ -47,6 +49,7 @@ class Employee:
             "created_at": created_at,
             "updated_at": updated_at,
             "email": self._email,
+            "senioritylevel_id": self._senioritylevel_id,
         }
 
     @classmethod
@@ -59,6 +62,7 @@ class Employee:
         experience: float,
         company_id: int,
         email: str,
+        senioritylevel_id: int,
         jobenddate: datetime | None = None,
     ) -> "Employee":
         employee = cls(
@@ -71,6 +75,7 @@ class Employee:
             experience=experience,
             company_id=company_id,
             email=email,
+            senioritylevel_id=senioritylevel_id,
         )
 
         return employee

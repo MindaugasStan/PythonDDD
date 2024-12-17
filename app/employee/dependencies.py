@@ -6,6 +6,10 @@ from app.company.infrastructure.repositories import CompanyRepository
 from app.dependencies import get_db
 from app.employee.application.services import EmployeeCreator, EmployeeFinder
 from app.employee.infrastructure.repositories import EmployeeRepository
+from app.seniority_level.dependencies import seniority_level_repository
+from app.seniority_level.infrastructure.repositories import (
+    SeniorityLevelRepository,
+)
 
 
 def employee_repository(
@@ -23,5 +27,8 @@ def employee_finder(
 def employee_creator(
     repository: EmployeeRepository = Depends(employee_repository),
     company_repo: CompanyRepository = Depends(company_repository),
+    seniority_level_repo: SeniorityLevelRepository = Depends(
+        seniority_level_repository
+    ),
 ) -> EmployeeCreator:
-    return EmployeeCreator(repository, company_repo)
+    return EmployeeCreator(repository, company_repo, seniority_level_repo)
