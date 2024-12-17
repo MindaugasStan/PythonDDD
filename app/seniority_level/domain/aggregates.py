@@ -9,7 +9,7 @@ class SeniorityLevel:
     def __init__(
         self,
         seniority_level_id: int | None = None,
-        level: str | None = None,
+        levelname: str | None = None,
         multiplier: float | None = None,
         time_needed: float | None = None,
         company_id: int | None = None,
@@ -17,7 +17,7 @@ class SeniorityLevel:
         updated_at: datetime | None = None,
     ) -> None:
         self._seniority_level_id = seniority_level_id
-        self._level = level
+        self._levelname = levelname
         self._multiplier = multiplier
         self._time_needed = time_needed
         self._company_id = company_id
@@ -29,7 +29,7 @@ class SeniorityLevel:
         updated_at = to_isoformat_or_none(self._updated_at)
         return {
             "seniority_level_id": self._seniority_level_id,
-            "level": self._level,
+            "levelname": self._levelname,
             "multiplier": self._multiplier,
             "time_needed": self._time_needed,
             "company_id": self._company_id,
@@ -45,7 +45,7 @@ class SeniorityLevel:
             if "key" in [
                 "created_at",
                 "updated_at",
-                "counterparty_id",
+                "seniority_level_id",
             ]:
                 continue
             setattr(self, f"_{key}", value)
@@ -53,11 +53,15 @@ class SeniorityLevel:
 
     @classmethod
     def create(
-        cls, level: str, multiplier: float, time_needed: float, company_id: int
+        cls,
+        levelname: str,
+        multiplier: float,
+        time_needed: float,
+        company_id: int,
     ) -> "SeniorityLevel":
         seniority_level = cls(
             seniority_level_id=None,
-            level=level,
+            levelname=levelname,
             multiplier=multiplier,
             time_needed=time_needed,
             company_id=company_id,

@@ -9,7 +9,7 @@ from app.seniority_level.infrastructure.db_models import SeniorityLevel
 
 
 class Employee(BasePlusDateTime):
-    __tablename__ = "employees"  # Ensure table name is consistent
+    __tablename__ = "employees"
 
     employee_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(Text, nullable=False)
@@ -19,32 +19,25 @@ class Employee(BasePlusDateTime):
         DateTime(timezone=True),
     )
     jobenddate: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True),
+        DateTime(timezone=True), nullable=True
     )
     hourlyrate: Mapped[float] = mapped_column()
     experience: Mapped[float] = mapped_column()
 
-    # Fix: Ensure foreign keys reference the correct column
     company_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "companies.company_id", ondelete="RESTRICT"
-        ),  # Corrected FK reference
+        ForeignKey("companies.company_id", ondelete="CASCADE"),
     )
     employee_company: Mapped["Company"] = relationship(
         "Company",
         back_populates="employees",
         lazy="joined",
-        cascade="all, delete-orphan",
     )
 
     senioritylevel_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "seniority_levels.seniority_level_id", ondelete="RESTRICT"
-        ),  # Fixed FK reference
+        ForeignKey("seniority_levels.seniority_level_id", ondelete="CASCADE"),
     )
     seniority_level: Mapped["SeniorityLevel"] = relationship(
         "SeniorityLevel",
         back_populates="employees",
         lazy="joined",
-        cascade="all, delete-orphan",
     )

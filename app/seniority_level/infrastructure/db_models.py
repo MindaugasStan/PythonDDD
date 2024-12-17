@@ -5,7 +5,7 @@ from app.core.base_db_model import BasePlusDateTime
 
 
 class SeniorityLevel(BasePlusDateTime):
-    __tablename__ = "seniority_levels"  # Ensure the table name is consistent
+    __tablename__ = "seniority_levels"
 
     seniority_level_id: Mapped[int] = mapped_column(
         primary_key=True, index=True
@@ -14,20 +14,15 @@ class SeniorityLevel(BasePlusDateTime):
     multiplier: Mapped[float] = mapped_column()
     time_needed: Mapped[float] = mapped_column()
 
-    # Corrected FK reference to companies
     company_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "companies.company_id", ondelete="RESTRICT"
-        ),  # Corrected FK reference
+        ForeignKey("companies.company_id", ondelete="CASCADE"),
     )
     company: Mapped["Company"] = relationship(
         "Company",
         back_populates="levels",
         lazy="joined",
-        cascade="all, delete-orphan",
     )
 
-    # Back-population to Employee relationship
     employees: Mapped["Employee"] = relationship(
         "Employee",
         back_populates="seniority_level",

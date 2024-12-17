@@ -7,11 +7,11 @@ from app.employee.domain.aggregates import Employee
 
 class EmployeeBase(BaseModel):
     name: str
-    last_name: str
-    job_start_date: datetime.datetime
-    job_end_date: datetime.datetime | None = None
+    lastname: str
+    jobstartdate: datetime.datetime
+    jobenddate: datetime.datetime | None = None
     experience: float
-    hourly_rate: float
+    hourlyrate: float
     company_id: int
 
 

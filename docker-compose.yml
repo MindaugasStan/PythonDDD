@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile
       target: python-ddd
     container_name: ddd-development-app
-    user: app
     command: uvicorn app.main:app --host=0.0.0.0 --port=8080 --reload
     volumes:
       - ./:/app

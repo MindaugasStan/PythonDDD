@@ -41,6 +41,7 @@ class EmployeeRepository(BaseRepository):
         self._session.refresh(db_model)
         employee._updated_at = db_model.updated_at
         employee._created_at = db_model.created_at
+        employee._employee_id = db_model.employee_id
 
     def update(self, employee, db_model):
         db_model = self._session.merge(db_model)
@@ -57,17 +58,18 @@ class EmployeeRepository(BaseRepository):
         return Employee(
             name=db_model.name,
             lastname=db_model.lastname,
-            jobstart_date=db_model.jobstartdate,
-            jobend_date=db_model.jobenddate,
-            hourly_rate=db_model.hourlyrate,
+            jobstartdate=db_model.jobstartdate,
+            jobenddate=db_model.jobenddate,
+            hourlyrate=db_model.hourlyrate,
             experience=db_model.experience,
             company_id=db_model.company_id,
             created_at=db_model.created_at,
             updated_at=db_model.updated_at,
+            email=db_model.email,
         )
 
     def _from_entity(self, employee: Employee) -> DBEmployee:
         snapshot = employee.to_snapshot()
         snapshot.pop("created_at")
         snapshot.pop("updated_at")
-        return Employee(**snapshot)
+        return DBEmployee(**snapshot)

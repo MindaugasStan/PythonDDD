@@ -6,7 +6,7 @@ from app.seniority_level.domain.aggregates import SeniorityLevel
 
 
 class SeniorityBase(BaseModel):
-    level: str
+    levelname: str
     multiplier: float
     time_needed: float
     company_id: int

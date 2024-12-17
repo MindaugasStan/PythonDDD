@@ -41,6 +41,7 @@ class CompanyRepository(BaseRepository):
         self._session.refresh(db_model)
         company._updated_at = db_model.updated_at
         company._created_at = db_model.created_at
+        company._company_id = db_model.company_id
 
     def update(self, company, db_model):
         db_model = self._session.merge(db_model)

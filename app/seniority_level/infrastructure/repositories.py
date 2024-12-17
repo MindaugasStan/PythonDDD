@@ -45,6 +45,7 @@ class SeniorityLevelRepository(BaseRepository):
         self._session.refresh(db_model)
         seniority_level._updated_at = db_model.updated_at
         seniority_level._created_at = db_model.created_at
+        seniority_level._seniority_level_id = db_model.seniority_level_id
 
     def update(self, seniority_level, db_model):
         db_model = self._session.merge(db_model)
@@ -60,7 +61,7 @@ class SeniorityLevelRepository(BaseRepository):
     def _to_entity(self, db_model: DBSeniorityLevel) -> SeniorityLevel:
         return SeniorityLevel(
             seniority_level_id=db_model.seniority_level_id,
-            level=db_model.levelname,
+            levelname=db_model.levelname,
             multiplier=db_model.multiplier,
             time_needed=db_model.time_needed,
             company_id=db_model.company_id,
@@ -74,4 +75,4 @@ class SeniorityLevelRepository(BaseRepository):
         snapshot = seniority_level.to_snapshot()
         snapshot.pop("created_at")
         snapshot.pop("updated_at")
-        return SeniorityLevel(**snapshot)
+        return DBSeniorityLevel(**snapshot)

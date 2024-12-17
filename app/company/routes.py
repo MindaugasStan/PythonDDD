@@ -38,12 +38,11 @@ def get_companies(
     response_model=ReadCompanyDTO,
     status_code=status.HTTP_201_CREATED,
 )
-def create_seniority_level(
+def create_company(
     data: CreateCompanyDTO,
     service: CompanyCreator = Depends(company_creator),
     session: Session = Depends(get_db),
 ):
-    print(data)
     company = service.create(create_company=data)
 
     session.commit()
